@@ -3,6 +3,13 @@
 import { useState, useEffect } from "react";
 import { Bot, X, Send, MessageCircle } from "lucide-react";
 
+// TypeScript pencere hatasını önlemek için
+declare global {
+  interface Window {
+    botpressWebChat: any;
+  }
+}
+
 interface ChatWidgetProps {
   isOpen: boolean;
   onClose: () => void;
@@ -23,12 +30,36 @@ export function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
     },
   ]);
 
-  // Bot entegrasyonu icin placeholder
-  // <!-- BOT_INTEGRATION_SCRIPT_PLACEHOLDER -->
-  // Kendi bot script kodunuzu buraya ekleyebilirsiniz
+  // Bot entegrasyonu
   useEffect(() => {
-    // Bot SDK initialization would go here
-    // Example: window.YunusBot?.init({ apiKey: 'YOUR_API_KEY' });
+    const injectScript = document.createElement("script");
+    injectScript.src = "https://cdn.botpress.cloud/webchat/v3.6/inject.js";
+    injectScript.async = true;
+    document.body.appendChild(injectScript);
+
+    const botScript = document.createElement("script");
+    botScript.src = "https://files.bpcontent.cloud/2026/04/08/14/20260408140424-2539MZMF.js";
+    botScript.async = true;
+    document.body.appendChild(botScript);
+
+    const handleBotMessages = (event: any) => {
+      // Botpress'ten gelen mesajı yakalayıp ekrana basar
+      if (event.type === "botpressWebChat:message") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            text: event.text,
+            isBot: true,
+            time: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }),
+          },
+        ]);
+      }
+    };
+
+    window.addEventListener("botpressWebChat:message", handleBotMessages);
+    return () => {
+      window.removeEventListener("botpressWebChat:message", handleBotMessages);
+    };
   }, []);
 
   const handleSend = () => {
@@ -39,25 +70,18 @@ export function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
       minute: "2-digit",
     });
 
-    // Add user message
+    // Kullanıcı mesajını ekrana ekle
     setMessages((prev) => [...prev, { text: message, isBot: false, time }]);
-    setMessage("");
 
-    // Simulate bot response (replace with actual bot integration)
-    setTimeout(() => {
-      const botTime = new Date().toLocaleTimeString("tr-TR", {
-        hour: "2-digit",
-        minute: "2-digit",
+    // MESAJI BOTPRESS'E GÖNDER
+    if (window.botpressWebChat) {
+      window.botpressWebChat.sendPayload({
+        type: "text",
+        text: message,
       });
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: "Tesekkurler! Mesajinizi aldim. En kisa surede size yardimci olacagim. Daha hizli donus icin WhatsApp uzerinden de ulasabilirsiniz.",
-          isBot: true,
-          time: botTime,
-        },
-      ]);
-    }, 1000);
+    }
+
+    setMessage("");
   };
 
   if (!isOpen) return null;
@@ -99,17 +123,15 @@ export function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
               className={`flex ${msg.isBot ? "justify-start" : "justify-end"}`}
             >
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                  msg.isBot
+                className={`max-w-[80%] rounded-2xl px-4 py-3 ${msg.isBot
                     ? "bg-muted text-foreground rounded-tl-none"
                     : "bg-primary text-primary-foreground rounded-tr-none"
-                }`}
+                  }`}
               >
                 <p className="text-sm">{msg.text}</p>
                 <span
-                  className={`text-xs mt-1 block ${
-                    msg.isBot ? "text-muted-foreground" : "text-primary-foreground/70"
-                  }`}
+                  className={`text-xs mt-1 block ${msg.isBot ? "text-muted-foreground" : "text-primary-foreground/70"
+                    }`}
                 >
                   {msg.time}
                 </span>
