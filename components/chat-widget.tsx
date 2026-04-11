@@ -3,13 +3,6 @@
 import { useState, useEffect } from "react";
 import { Bot, X, Send, MessageCircle } from "lucide-react";
 
-// TypeScript'in window hatası vermemesi için
-declare global {
-  interface Window {
-    botpressWebChat: any;
-  }
-}
-
 interface ChatWidgetProps {
   isOpen: boolean;
   onClose: () => void;
@@ -25,57 +18,25 @@ export function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
     },
   ]);
 
-  useEffect(() => {
-    // 1. Botpress Kütüphanelerini Yüklüyoruz
-    const injectScript = document.createElement("script");
-    injectScript.src = "https://cdn.botpress.cloud/webchat/v3.6/inject.js";
-    injectScript.async = true;
-    document.body.appendChild(injectScript);
-
-    const botScript = document.createElement("script");
-    // SENİN ÖZEL BOT ID'N BURADA BAĞLI
-    botScript.src = "https://files.bpcontent.cloud/2026/04/08/14/20260408140424-2539MZMF.js";
-    botScript.async = true;
-    document.body.appendChild(botScript);
-
-    // 2. Bottan gelen cevapları yakalayıp senin tasarımındaki balonlara ekleyen kısım
-    const handleBotMessages = (event: any) => {
-      if (event.type === "botpressWebChat:message") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            text: event.text,
-            isBot: true,
-            time: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }),
-          },
-        ]);
-      }
-    };
-
-    window.addEventListener("botpressWebChat:message", handleBotMessages);
-
-    return () => {
-      window.removeEventListener("botpressWebChat:message", handleBotMessages);
-      if (document.body.contains(injectScript)) document.body.removeChild(injectScript);
-      if (document.body.contains(botScript)) document.body.removeChild(botScript);
-    };
-  }, []);
-
   const handleSend = () => {
     if (!message.trim()) return;
 
     const time = new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
 
-    // Senin tasarımında kullanıcı mesajını ekrana ekle
+    // Kullanıcı mesajını ekle
     setMessages((prev) => [...prev, { text: message, isBot: false, time }]);
 
-    // MESAJI ARKA PLANDA BOTPRESS'E GÖNDER
-    if (window.botpressWebChat) {
-      window.botpressWebChat.sendPayload({
-        type: "text",
-        text: message,
-      });
-    }
+    // Simüle edilmiş bot cevabı (Botpress bağlantısı yokken çalışan hali)
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          text: "Tesekkurler! Mesajinizi aldim. En kisa surede size donecegim.",
+          isBot: true,
+          time: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }),
+        },
+      ]);
+    }, 1000);
 
     setMessage("");
   };

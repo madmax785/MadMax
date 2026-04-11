@@ -11,6 +11,7 @@ interface QuoteModalProps {
 export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     business: "",
@@ -18,23 +19,35 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
     message: "",
   });
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow numbers
+    const numbersOnly = value.replace(/[^0-9]/g, "");
+    
+    // Check if user tried to enter non-numeric characters
+    if (value !== numbersOnly && value.length > 0) {
+      setPhoneError(true);
+      setTimeout(() => setPhoneError(false), 500);
+    }
+    
+    setFormData({ ...formData, phone: numbersOnly });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Formspree integration - replace YOUR_FORM_ID with actual Formspree form ID
-      const response = await fetch("https://formspree.io/f/xpwzgvkd", {
+      const response = await fetch("https://formspree.io/f/xkopldyy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: formData.name,
-          business: formData.business,
-          phone: formData.phone,
-          message: formData.message,
-          _replyto: "boombazled0@gmail.com",
+          isim: formData.name,
+          isletme: formData.business,
+          telefon: formData.phone,
+          mesaj: formData.message,
         }),
       });
 
@@ -109,6 +122,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     </label>
                     <input
                       type="text"
+                      name="isim"
                       required
                       value={formData.name}
                       onChange={(e) =>
@@ -125,6 +139,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     </label>
                     <input
                       type="text"
+                      name="isletme"
                       required
                       value={formData.business}
                       onChange={(e) =>
@@ -141,14 +156,25 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     </label>
                     <input
                       type="tel"
+                      name="telefon"
                       required
                       value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border border-border bg-background/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                      onChange={handlePhoneChange}
+                      pattern="[0-9]*"
+                      inputMode="numeric"
+                      maxLength={11}
+                      className={`w-full px-4 py-3 rounded-xl border bg-background/50 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all ${
+                        phoneError
+                          ? "border-red-500 ring-2 ring-red-500/50"
+                          : "border-border"
+                      }`}
                       placeholder="05XX XXX XX XX"
                     />
+                    {phoneError && (
+                      <p className="text-red-500 text-xs mt-1">
+                        Sadece rakam girebilirsiniz
+                      </p>
+                    )}
                   </div>
 
                   <div>
@@ -156,6 +182,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                       Mesajiniz
                     </label>
                     <textarea
+                      name="mesaj"
                       required
                       value={formData.message}
                       onChange={(e) =>
