@@ -5,12 +5,10 @@ import { References } from "@/components/references";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { CustomCursor } from "@/components/custom-cursor";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      <CustomCursor />
       <ThemeToggle />
       <Hero />
       <ServicesBento />

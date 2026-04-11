@@ -4,7 +4,6 @@ import { useState } from "react";
 import { MessageCircle, Bot, FileText } from "lucide-react";
 import { QuoteModal } from "./quote-modal";
 import { ChatWidget, ChatButton } from "./chat-widget";
-import { MagneticButton } from "./magnetic-button";
 
 export function Contact() {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
@@ -57,41 +56,39 @@ export function Contact() {
           {/* Contact Options */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {contactOptions.map((option, index) => (
-              <MagneticButton key={index} strength={0.15}>
-                <button
-                  onClick={option.action}
-                  data-clickable
-                  className={`group relative w-full p-6 md:p-8 rounded-3xl border backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl text-left active:scale-[0.98] ${option.color}`}
+              <button
+                key={index}
+                onClick={option.action}
+                className={`group relative p-6 md:p-8 rounded-3xl border backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl cursor-pointer text-left ${option.color}`}
+              >
+                {/* Icon */}
+                <div
+                  className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 ${option.iconBg}`}
                 >
-                  {/* Icon */}
-                  <div
-                    className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 ${option.iconBg}`}
+                  <option.icon className="w-7 h-7" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-bold mb-2">{option.title}</h3>
+                <p className="text-sm opacity-80">{option.description}</p>
+
+                {/* Arrow */}
+                <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <option.icon className="w-7 h-7" />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="text-xl font-bold mb-2">{option.title}</h3>
-                  <p className="text-sm opacity-80">{option.description}</p>
-
-                  {/* Arrow */}
-                  <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </div>
-                </button>
-              </MagneticButton>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </div>
+              </button>
             ))}
           </div>
         </div>
