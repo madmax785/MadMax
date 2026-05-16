@@ -1,71 +1,61 @@
-"use client";
-
-import { Bot, Sparkles } from "lucide-react";
-import { MagneticButton } from "./magnetic-button";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 py-20 overflow-hidden">
-      {/* Gradient orb background effect */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/20 blur-[120px] pointer-events-none" />
-      
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+    <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto text-center">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/50 bg-card/70 backdrop-blur-sm mb-8 shadow-sm dark:shadow-none">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8">
           <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-sm text-muted-foreground">Yapay Zeka Destekli Cozumler</span>
+          <span className="text-sm font-medium text-primary">Yapay Zeka ile Tanisin</span>
         </div>
 
-        {/* Main Heading */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 tracking-tight text-balance">
-          Gelecegi Isletmenize{" "}
-          <span className="text-primary">Entegre Edin</span>
+        {/* Heading */}
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight tracking-tight text-balance">
+          Isletmenizi{" "}
+          <span className="text-primary">Yapay Zeka</span>{" "}
+          ile Guclendirelim
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed text-pretty">
-          Yerel esnaflardan buyuyen sirketlere kadar, yapay zeka teknolojileriyle 
-          isletmenizi bir adim one tasiyin. Musterilerinize 7/24 hizmet verin, 
-          dijitalde fark yaratin.
+        <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+          WhatsApp botlarindan web sitelerine, Google yorumlarindan sosyal medya yonetimine. 
+          Kucuk isletmeler icin uygun fiyatli dijital cozumler.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <MagneticButton strength={0.25}>
-            <a
-              href="#iletisim"
-              data-clickable
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg transition-all duration-300 hover:bg-primary/90 hover:scale-105 hover:shadow-lg hover:shadow-primary/25 active:scale-95"
-            >
-              <Bot className="w-5 h-5" />
-              Hemen Baslayin
-            </a>
-          </MagneticButton>
-          <MagneticButton strength={0.2}>
-            <a
-              href="#hizmetler"
-              data-clickable
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl border border-border bg-card/70 backdrop-blur-sm text-foreground font-semibold text-lg transition-all duration-300 hover:bg-card hover:border-primary/50 shadow-sm dark:shadow-none active:scale-95"
-            >
-              Hizmetlerimizi Kesfedin
-            </a>
-          </MagneticButton>
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="https://wa.me/905366725534?text=Merhaba,%20hizmetleriniz%20hakkinda%20bilgi%20almak%20istiyorum."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/25"
+          >
+            Ucretsiz Danismanlik
+            <ArrowRight className="w-4 h-4" />
+          </a>
+          <a
+            href="#hizmetler"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground font-medium rounded-xl hover:bg-secondary/80 transition-colors border border-border"
+          >
+            Hizmetleri Incele
+          </a>
         </div>
 
-        {/* Logo */}
-        <div className="mt-16 flex items-center justify-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-            <Bot className="w-6 h-6 text-primary" />
+        {/* Trust Indicators */}
+        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full" />
+            <span className="text-sm">7/24 Destek</span>
           </div>
-          <span className="text-2xl font-bold text-foreground">Yunus AI</span>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <span className="text-xs text-muted-foreground">Kesfet</span>
-        <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
-          <div className="w-1 h-2 rounded-full bg-muted-foreground/50" />
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full" />
+            <span className="text-sm">Hizli Teslimat</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full" />
+            <span className="text-sm">Uygun Fiyat</span>
+          </div>
         </div>
       </div>
     </section>

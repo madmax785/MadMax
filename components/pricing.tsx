@@ -1,105 +1,135 @@
-"use client";
+import { Check } from "lucide-react";
 
-import { Check, Sparkles } from "lucide-react";
+const plans = [
+  {
+    name: "Baslangic",
+    price: "1.500",
+    period: "tek seferlik",
+    description: "Kucuk isletmeler icin ideal baslangic paketi",
+    features: [
+      "Tek sayfa web sitesi",
+      "Mobil uyumlu tasarim",
+      "Temel SEO ayarlari",
+      "1 ay ucretsiz destek",
+      "SSL sertifikasi",
+    ],
+    cta: "Hemen Baslayalim",
+    popular: false,
+  },
+  {
+    name: "Profesyonel",
+    price: "3.500",
+    period: "tek seferlik",
+    description: "Buyuyen isletmeler icin kapsamli paket",
+    features: [
+      "Cok sayfalik web sitesi",
+      "WhatsApp botu entegrasyonu",
+      "Google Maps optimizasyonu",
+      "3 ay ucretsiz destek",
+      "Sosyal medya entegrasyonu",
+      "Yorum yonetim paneli",
+    ],
+    cta: "En Populer Secim",
+    popular: true,
+  },
+  {
+    name: "Kurumsal",
+    price: "7.500",
+    period: "tek seferlik",
+    description: "Tam kapsamli dijital donusum",
+    features: [
+      "Ozel tasarim web sitesi",
+      "Gelismis WhatsApp botu",
+      "Sosyal medya yonetimi (1 ay)",
+      "Google Ads kurulumu",
+      "6 ay ucretsiz destek",
+      "Aylik performans raporu",
+      "Oncelikli destek hatti",
+    ],
+    cta: "Iletisime Gecin",
+    popular: false,
+  },
+];
 
 export function Pricing() {
   return (
-    <section id="fiyatlandirma" className="px-4 py-20 md:py-32">
-      <div className="max-w-4xl mx-auto">
-        {/* Section Header */}
+    <section id="fiyatlar" className="py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4 text-balance">
-            Şeffaf ve Esnek
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
+            Seffaf Fiyatlandirma
           </h2>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto text-pretty">
-            İhtiyacınıza göre özelleştirilebilir fiyatlandırma seçenekleri.
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            Gizli maliyet yok. Ne goruyorsaniz, odediginiz o.
           </p>
         </div>
 
-        {/* Pricing Card */}
-        <div className="relative p-1 rounded-[2rem] bg-gradient-to-b from-primary/30 to-transparent">
-          <div className="relative rounded-[1.8rem] bg-card/70 backdrop-blur-xl border border-border/30 overflow-hidden shadow-lg dark:shadow-none">
-            {/* Glassmorphism glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-
-            <div className="p-8 md:p-12">
-              <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-                {/* Monthly Subscription */}
-                <div className="space-y-6">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-                    <Sparkles className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium text-primary">Aylık Abonelik</span>
-                  </div>
-                  
-                  <div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-5xl md:text-6xl font-bold text-foreground">250</span>
-                      <span className="text-xl text-muted-foreground">TL</span>
-                      <span className="text-muted-foreground">/ ay</span>
-                    </div>
-                    <p className="text-muted-foreground mt-2">{"'"}den başlayan fiyatlarla</p>
-                  </div>
-
-                  <ul className="space-y-3">
-                    {[
-                      "WhatsApp bot desteği",
-                      "Temel web sitesi bakımı",
-                      "Aylık raporlama",
-                      "E-posta desteği",
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-center gap-3 text-foreground">
-                        <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                          <Check className="w-3 h-3 text-primary" />
-                        </div>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative p-6 rounded-2xl border ${
+                plan.popular
+                  ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
+                  : "border-border bg-card"
+              }`}
+            >
+              {/* Popular Badge */}
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
+                    En Populer
+                  </span>
                 </div>
+              )}
 
-                {/* Custom Project */}
-                <div className="space-y-6 md:border-l md:border-border/30 md:pl-12">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary border border-border/50">
-                    <span className="text-sm font-medium text-foreground">Projeye Özel</span>
-                  </div>
-
-                  <div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-5xl md:text-6xl font-bold text-foreground">Özel</span>
-                    </div>
-                    <p className="text-muted-foreground mt-2">İhtiyaçlarınıza göre fiyatlandırma</p>
-                  </div>
-
-                  <ul className="space-y-3">
-                    {[
-                      "Tam kapsamlı web sitesi",
-                      "Özel WhatsApp entegrasyonu",
-                      "Google Harita optimizasyonu",
-                      "Öncelikli destek",
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-center gap-3 text-foreground">
-                        <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                          <Check className="w-3 h-3 text-primary" />
-                        </div>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+              {/* Plan Header */}
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-semibold text-foreground">{plan.name}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+                  <span className="text-muted-foreground"> TL</span>
+                  <p className="text-sm text-muted-foreground mt-1">{plan.period}</p>
                 </div>
               </div>
+
+              {/* Features */}
+              <ul className="space-y-3 mb-6">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm text-muted-foreground">{feature}</span>
+                  </li>
+                ))}
+              </ul>
 
               {/* CTA */}
-              <div className="mt-10 pt-8 border-t border-border/30 text-center">
-                <a
-                  href="#iletisim"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg transition-all duration-300 hover:bg-primary/90 hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
-                >
-                  Ücretsiz Teklif Alın
-                </a>
-              </div>
+              <a
+                href={`https://wa.me/905366725534?text=Merhaba,%20${encodeURIComponent(plan.name)}%20paketi%20hakkinda%20bilgi%20almak%20istiyorum.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`block w-full py-3 text-center font-medium rounded-xl transition-colors ${
+                  plan.popular
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border"
+                }`}
+              >
+                {plan.cta}
+              </a>
             </div>
-          </div>
+          ))}
         </div>
+
+        {/* Note */}
+        <p className="mt-12 text-center text-sm text-muted-foreground">
+          Ozel ihtiyaclariniz mi var?{" "}
+          <a href="#iletisim" className="text-primary hover:underline">
+            Size ozel teklif alalim
+          </a>
+        </p>
       </div>
     </section>
   );

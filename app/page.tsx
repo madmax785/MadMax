@@ -1,21 +1,19 @@
+import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
-import { ServicesBento } from "@/components/services-bento";
+import { Services } from "@/components/services";
 import { Pricing } from "@/components/pricing";
-import { References } from "@/components/references";
+import { About } from "@/components/about";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { CustomCursor } from "@/components/custom-cursor";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      <CustomCursor />
-      <ThemeToggle />
+      <Navbar />
       <Hero />
-      <ServicesBento />
+      <Services />
       <Pricing />
-      <References />
+      <About />
       <Contact />
       <Footer />
     </main>
